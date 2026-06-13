@@ -58,7 +58,7 @@ lcd.udcShow(num, pos);     // 显示自定义字符
 
 ```cpp
 const byte pattern[7] = {0x15,0x1F,0x13,0x0E,0x04,0x00,0x00};
-lcd.udcDefine(1, pattern);  // 定义第1个自定义字符
+lcd.udcDefine(1, pattern);  // 定义第1个自定义字符,at most 16(max)
 lcd.udcShow(1, 0);          // 在位置0显示
 ```
 
@@ -66,23 +66,28 @@ lcd.udcShow(1, 0);          // 在位置0显示
 
 | 名称 | 内容 | 示例 |
 |------|------|------|
-| `num` | 0-9 和 `.` | `lcd.num[0]` = '0' |
+| `num` | 0-7 和 `.` | `lcd.num[0]` = '0' |
 | `upper` | A-Z | `lcd.upper[0]` = 'A' |
 | `lower` | a-z | `lcd.lower[0]` = 'a' |
 
 ## 硬件连接
 
-| Arduino | 74HC164D | HDSP2112 |
-|---------|----------|----------|
-| D2 | DS | - |
-| D3 | SH_CP | - |
-| D4 | WR | - |
-| D5 | CE | - |
-| D6 | A0 | A0 |
-| D7 | A1 | A1 |
-| D8 | A2 | A2 |
-| D21 | K4 | K4 |
-| D22 | K3 | K3 |
+dio = 2;-> din
+clk = 3;-> clk
+wr = 4;-> wr
+ce = 5;-> ce       以上4个管脚连接74hc164d，输入十六进制输出到D7-D0
+a0 =6;->  A2（连接屏幕A2管脚的pin，下同）
+a1 =7;->  A1
+a2 =8;->  A0
+a3 =21;-> A3
+a4 =22;-> A4
+
+if you need add other chars,
+look for 'ASCII.png',use function lcd.write(x,y);
+x= 0xXX
+take 0 as an example:
+  put 0 at one 
+  lcd.write(0x30,0);
 
 ## 示例
 
